@@ -135,6 +135,24 @@ Confidence Score: 79.08%
 
 ---
 
+## Application Screenshots
+
+### Home Page
+
+![Home Page](screenshots/home-page.png)
+
+### X-ray Upload
+
+![X-ray Upload](screenshots/upload-page.png)
+
+### Prediction Result
+
+![Prediction Result](screenshots/prediction-result.png)
+
+![Analysis](screenshots/analysis-page.png)
+
+---
+
 ## Future Enhancements
 
 * Multi-disease chest X-ray classification
