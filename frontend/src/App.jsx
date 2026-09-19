@@ -72,7 +72,8 @@ export default function App() {
     try {
       const formData = new FormData();
       formData.append("image", image);
-      const response = await axios.post("http://localhost:5000/api/predict", formData, {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+      const response = await axios.post(`${backendUrl}/api/predict`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setResult(response.data);

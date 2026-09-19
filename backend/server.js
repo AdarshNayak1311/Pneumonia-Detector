@@ -15,7 +15,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // Gemini setup
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = process.env.GEMINI_API_KEY ? new GoogleGenerativeAI(process.env.GEMINI_API_KEY) : null;
 
 // ✅ Health check
 app.get('/health', (req, res) => {
@@ -25,6 +25,10 @@ app.get('/health', (req, res) => {
 // ✅ Main predict route
 app.post('/api/predict', upload.single('image'), async (req, res) => {
   try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No image file uploaded' });
+    }
+
     // Step 1: Image ko Flask ML API pe bhejo
     const formData = new FormData();
     formData.append('image', req.file.buffer, {
@@ -32,8 +36,9 @@ app.post('/api/predict', upload.single('image'), async (req, res) => {
       contentType: req.file.mimetype,
     });
 
+    const mlApiUrl = process.env.ML_API_URL || 'http://127.0.0.1:5001';
     const mlResponse = await axios.post(
-      `${process.env.ML_API_URL}/predict`,
+      `${mlApiUrl}/predict`,
       formData,
       { headers: formData.getHeaders() }
     );
