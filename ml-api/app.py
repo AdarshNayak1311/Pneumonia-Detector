@@ -37,7 +37,7 @@ def predict():
     try:
         image_bytes = file.read()
         processed = preprocess_image(image_bytes)
-        prediction = model.predict(processed)
+        prediction = model(processed, training=False).numpy()
 
         confidence = float(prediction[0][0])
         if confidence > 0.5:

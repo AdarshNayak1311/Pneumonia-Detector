@@ -95,7 +95,8 @@ app.post('/api/predict', upload.single('image'), async (req, res) => {
 
   } catch (error) {
     console.error('Error:', error.message);
-    res.status(500).json({ error: 'Kuch gadbad ho gayi!' });
+    const errorMessage = error.response?.data?.error || error.message || 'Kuch gadbad ho gayi!';
+    res.status(500).json({ error: errorMessage });
   }
 });
 
